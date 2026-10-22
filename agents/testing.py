@@ -35,4 +35,22 @@ def build_task(feature: dict) -> Task:
     return Task(description=INSTRUCTIONS + "\nFeature: " + str(feature.get("title", ""))
                 + "\n" + str(feature.get("description", ""))
                 + "\n" + str(feature.get("acceptance_criteria", [])),
-                expected_output='Un informe de pruebas.', agent=agent)
+                expected_output=(
+                    "Un informe Markdown completo para testing_report.md con: "
+                    "resumen del alcance y preparación; matriz de trazabilidad que "
+                    "asigne un ID a cada criterio de aceptación y lo vincule con uno "
+                    "o más casos; y casos positivos, negativos, de borde e integración "
+                    "cuando apliquen. Cada caso debe indicar ID, criterio asociado, "
+                    "tipo, datos, preparación, pasos reproducibles, resultado esperado, "
+                    "resultado real, estado (PASÓ, FALLÓ o NO EJECUTADO) y limpieza. "
+                    "Documenta los contratos de API comprobados (método, ruta, entrada, "
+                    "respuesta/errores) y de persistencia (datos, restricciones, "
+                    "migración y comprobación), además de las correcciones verificadas. "
+                    "Incluye los comandos exactos ejecutados con su salida real; marca "
+                    "NO EJECUTADO si no hay evidencia y no inventes resultados. "
+                    "Entrega también los archivos de prueba reproducibles en bloques "
+                    "de código con nombre de archivo en la primera línea. "
+                    "Si falta información para validar un criterio, indícalo como "
+                    "bloqueo o NO EJECUTADO."
+                ),
+                agent=agent)

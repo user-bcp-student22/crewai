@@ -8,8 +8,9 @@ SPEC_FILE = 'testing_report.md'
 EXTRACT_CODE = True
 
 INSTRUCTIONS = (
-    "Valida los criterios del feature y entrega la evidencia indicada por tu perfil. "
-    "No afirmes ejecuciones que no realizaste."
+    "Valida los criterios del feature. Entrega testing_report.md como evidencia "
+    "reutilizable por Security y Chapter, junto con los archivos de prueba Java/"
+    "TypeScript correspondientes. No afirmes ejecuciones que no realizaste."
 )
 agent = Agent(
     role=(

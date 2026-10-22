@@ -39,6 +39,8 @@ class WorkflowTests(unittest.TestCase):
         ):
             self.assertIn(section, testing_agent.goal + testing_agent.backstory)
         self.assertEqual(tasks["testing"].expected_output, "Un informe de pruebas.")
+        self.assertIn("Entrega testing_report.md", tasks["testing"].description)
+        self.assertIn("archivos de prueba Java/TypeScript", tasks["testing"].description)
         for role in ROLES:
             self.assertIs(tasks[role.KEY].agent, role.agent)
             self.assertIn("Transfer funds", tasks[role.KEY].description)

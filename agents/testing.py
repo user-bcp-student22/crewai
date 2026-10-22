@@ -13,9 +13,22 @@ preparación, datos, pasos, resultado esperado y resultado real. Comprueba contr
 de API y persistencia, así como las correcciones propuestas. Incluye comandos
 reproducibles y limpieza. No inventes ejecuciones: escribe NO EJECUTADO cuando no
 haya salida real. Entrega testing_report.md y los archivos de prueba correspondientes."""
-agent = Agent(role='Ingeniero de pruebas', goal="Completar la tarea asignada.",
-              backstory="Eres un integrante del equipo.", llm=llm,
-              verbose=True, allow_delegation=False)
+agent = Agent(
+    role="Ingeniero de pruebas que convierte criterios de aceptación en casos verificables.",
+    goal=(
+        "Entregar testing_report.md y los archivos de prueba correspondientes, "
+        "con resultados basados únicamente en evidencia real."
+    ),
+    backstory=(
+        "Diseñas pruebas positivas, negativas, de borde e integración. Documentas "
+        "preparación, datos, pasos y resultados; compruebas contratos de API y "
+        "persistencia, así como las correcciones propuestas. Nunca inventas "
+        "ejecuciones: marcas NO EJECUTADO cuando no existe salida real."
+    ),
+    llm=llm,
+    verbose=True,
+    allow_delegation=False,
+)
 
 
 def build_task(feature: dict) -> Task:

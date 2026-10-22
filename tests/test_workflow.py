@@ -26,6 +26,18 @@ class WorkflowTests(unittest.TestCase):
             list(tasks),
             ["architect", "backend", "frontend", "testing", "security", "chapter"],
         )
+        expected_testing_output = tasks["testing"].expected_output
+        for section in (
+            "Resumen para Security y Chapter",
+            "Trazabilidad",
+            "Casos de prueba",
+            "Contrato de API",
+            "Persistencia",
+            "Correcciones verificadas",
+            "Comandos y entorno",
+            "NO EJECUTADO",
+        ):
+            self.assertIn(section, expected_testing_output)
         for role in ROLES:
             self.assertIs(tasks[role.KEY].agent, role.agent)
             self.assertIn("Transfer funds", tasks[role.KEY].description)

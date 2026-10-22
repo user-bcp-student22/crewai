@@ -7,15 +7,33 @@ LABEL = 'Ingeniero de pruebas'
 SPEC_FILE = 'testing_report.md'
 EXTRACT_CODE = True
 
-INSTRUCTIONS = """Genera testing_report.md como evidencia verificable y como handoff para Security y Chapter.
-Asigna IDs a cada criterio de aceptación y a cada prueba, y relaciona cada criterio con
-los casos que lo verifican. Incluye casos positivos, negativos, de borde e integración
-cuando apliquen. Detalla preparación, datos, pasos, resultado esperado, resultado real,
-estado, evidencia y limpieza. Comprueba los contratos de API y persistencia y las
-correcciones propuestas. Registra comandos y salidas reales; nunca inventes resultados.
-Marca NO EJECUTADO cuando no se haya corrido una prueba y explica por qué. Si falta
-información o un contrato, decláralo como bloqueo; no completes vacíos por suposición.
-Incluye pruebas Java/TypeScript en bloques con la ruta del archivo como primer comentario."""
+INSTRUCTIONS = """Genera testing_report.md como evidencia verificable y handoff para Security y Chapter.
+Usa estas secciones en este orden:
+# Evidencia de pruebas: <feature>
+## Resumen para Security y Chapter
+## Trazabilidad
+## Casos de prueba
+## Contrato de API
+## Persistencia
+## Correcciones verificadas
+## Comandos y entorno
+## Archivos de prueba
+
+Asigna IDs a cada criterio de aceptación y cada caso, y vincula cada criterio con sus
+casos de prueba. Incluye casos positivos, negativos, de borde e integración cuando
+apliquen. En cada caso documenta tipo, preparación, datos, pasos reproducibles,
+resultado esperado, resultado real, estado (PASÓ/FALLÓ/NO EJECUTADO), evidencia y
+limpieza. Comprueba contratos de API (método, ruta, entradas y respuestas/errores) y
+persistencia (entidades, restricciones, migraciones y comprobaciones). Registra cada
+corrección propuesta con la prueba que la verifica o su estado pendiente.
+
+El resumen para Security y Chapter debe indicar qué se probó, qué falló, qué riesgos,
+límites y bloqueos permanecen, sin exigir inferencias. Registra los comandos exactos,
+el entorno y las salidas reales. Nunca inventes ejecuciones: marca NO EJECUTADO cuando
+no se haya corrido una prueba y explica por qué. Si falta información o un contrato,
+decláralo como bloqueo; no completes vacíos por suposición. Si API o persistencia no
+aplican, indícalo y justifícalo. Incluye pruebas Java/TypeScript en bloques de código
+con la ruta relativa como primer comentario, compatible con la extracción de código."""
 agent = Agent(
     role="Ingeniero de pruebas que convierte criterios de aceptación en casos verificables.",
     goal=(
@@ -38,26 +56,5 @@ def build_task(feature: dict) -> Task:
     return Task(description=INSTRUCTIONS + "\nFeature: " + str(feature.get("title", ""))
                 + "\n" + str(feature.get("description", ""))
                 + "\n" + str(feature.get("acceptance_criteria", [])),
-                expected_output=(
-                    "Entrega testing_report.md en Markdown con estas secciones y en este orden: "
-                    "# Evidencia de pruebas: <feature>; "
-                    "## Resumen para Security y Chapter (estado global, criterios cubiertos, "
-                    "fallos, riesgos, límites y bloqueos); "
-                    "## Trazabilidad (tabla con ID/criterio, IDs de prueba y estado); "
-                    "## Casos de prueba (por caso: ID, criterio asociado, tipo, preparación, "
-                    "datos, pasos reproducibles, resultado esperado, resultado real, estado "
-                    "PASÓ/FALLÓ/NO EJECUTADO, evidencia y limpieza); "
-                    "## Contrato de API (método/ruta, entrada, respuesta esperada/real y estado, "
-                    "o No aplica con justificación); "
-                    "## Persistencia (entidad/tabla, restricciones/migración, comprobaciones, "
-                    "resultado y limpieza, o No aplica con justificación); "
-                    "## Correcciones verificadas (cambio, prueba y evidencia, o pendientes); "
-                    "## Comandos y entorno (comando exacto, entorno, salida observada y estado); "
-                    "## Archivos de prueba (bloques Java/TypeScript con ruta relativa en el "
-                    "primer comentario, compatible con la extracción de código). "
-                    "El resumen debe permitir a Security y Chapter identificar qué se probó, "
-                    "qué falló y qué no se ejecutó sin inferirlo. No presentes resultados "
-                    "esperados como resultados reales; escribe NO EJECUTADO cuando falte salida "
-                    "real y explica todo contrato o criterio bloqueado."
-                ),
+                expected_output='Un informe de pruebas.',
                 agent=agent)
